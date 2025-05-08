@@ -1,19 +1,20 @@
 public class AudioBook extends Book {
-private double sizeMB;
-private int lengthMin;
-private String voice;
+    private final double fileSizeInMB;
+    private final int playLengthInMinutes;
+    private final String narrator;
 
-    public AudioBook(String t, int y, String a, double s, int l, String v) {
-super(t, y, a);
-sizeMB = s;
-lengthMin = l;
-voice = v;
+    public AudioBook(String title, int year, String author, double fileSizeInMB, int playLengthInMinutes, String narrator) {
+        super(title, year, author);
+        this.fileSizeInMB = fileSizeInMB;
+        this.playLengthInMinutes = playLengthInMinutes;
+        this.narrator = narrator;
     }
 
+    @Override
     public String toString() {
-return super.toString() +
-"Tamanho do Arquivo: " + sizeMB + " MB\n" +
-"Duração: " + lengthMin + " minutos\n" +
-"Narrador: " + voice + "\n\n";
+        return super.toString() +
+               "\nTamanho do arquivo: " + fileSizeInMB + " MB" +
+               "\nDuração: " + playLengthInMinutes + " minutos" +
+               "\nNarrador: " + narrator;
     }
 }
