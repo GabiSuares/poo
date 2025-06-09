@@ -19,6 +19,15 @@ sudo apt install postgresql postgresql-contrib postgresql-common postgresql-clie
 sudo service postgresql start
 ```
 
+- Definir a senha inicial do usuário postgres
+```bash
+sudo -u postgres psql
+```
+
+```bash
+postgres=#  \password postgres
+```
+
 - Testar conexão com PostgreSQL
 ```bash
 psql -h localhost -p 5432 -U postgres -d postgres
@@ -41,6 +50,9 @@ postgres=# exit
 - Testar conexão com banco
 ```bash
 psql -h localhost -p 5432 -U postgres -d postgres
+```
+
+```bash
 postgres=> SELECT * FROM film;
 postgres=> exit
 ```
@@ -70,13 +82,6 @@ postgres=> \l
 postgres=> exit
 ```
 
-- Baixar driver de conexão com o PostgreSQL
-```bash
-/14-db> mkdir lib
-/14-db> cd lib/
-/14-db/lib> wget https://jdbc.postgresql.org/download/postgresql-42.7.6.jar
-```
-
 - Baixar o banco de dados de exemplo
 ```bash
 /14-db> mkdir db
@@ -99,10 +104,22 @@ postgres=> SELECT * FROM film;
 curl -fsS https://www.pgadmin.org/static/packages_pgadmin_org.pub | sudo gpg --dearmor -o /usr/share/keyrings/packages-pgadmin-org.gpg
 sudo sh -c 'echo "deb [signed-by=/usr/share/keyrings/packages-pgadmin-org.gpg] https://ftp.postgresql.org/pub/pgadmin/pgadmin4/apt/$(lsb_release -cs) pgadmin4 main" > /etc/apt/sources.list.d/pgadmin4.list && apt update'
 sudo apt install pgadmin4-web
-sudo /usr/pgadmin4/bin/setup-web.sh
-sudo nano /etc/apache2/ports.conf
-sudo service apache2 restart
 ```
+
+- Configuar o pgAdmin
+```bash
+sudo /usr/pgadmin4/bin/setup-web.sh
+```
+
+- Alterar a porta para rodar o pgAdmin para 8888
+```bash
+sudo nano /etc/apache2/ports.conf
+```
+
+```bash
+sudo service apache2 start
+```
+- Acesse no browser o endereço http://localhost:8888/pgadmin4
 
 ### Configurar servidor PostgreSQL e pgAdmin4 no docker
 ```bash
@@ -113,11 +130,24 @@ docker-compose up -d
 
 - Criar arquivo `db.properties` a partir do arquivo exemplo `db.properties.sample` e atualizar valores
 ```bash
+url=jdbc:postgresql://[HOST]:5432/postgres
+user=[USER]
+password=[PASSWORD]
+```
+
+- Baixar driver de conexão com o PostgreSQL
+```bash
+/14-db> mkdir lib
+/14-db> cd lib/
+/14-db/lib> wget https://jdbc.postgresql.org/download/postgresql-42.7.6.jar
 ```
 
 - Compilar e rodar programa
-```bash
-javac -d bin src/Film.java
 
+Substituir [PROGRAM] pelo nome do programa que deja rodar.
+
+```bash
+/14-db> javac -d bin src/[PROGRAM].java
+/14-db> java -cp bin:lib/* [PROGRAM]
 ```
 
