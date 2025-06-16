@@ -10,8 +10,8 @@ public class EliminaDuplicados {
 }
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        Set<String> nomes = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
+    Scanner sc = new Scanner(System.in);
+    Set<String> nomes = new TreeSet<>(String.CASE_INSENSITIVE_ORDER);
 
 System.out.println("=====================================");
 System.out.println("  Cadastro de Nomes (sem duplicados)");
